@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel", "Entities\DomainModel\DomainModel.csproj", "{00BAAAAB-0DF4-48ED-AD10-EC8D05E875E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainModel", "Entities\DomainModel\DomainModel.csproj", "{00BAAAAB-0DF4-48ED-AD10-EC8D05E875E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "UseCases\Application\Application.csproj", "{A8A64028-B5C1-4041-A734-AD8531AEA899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "UseCases\Application\Application.csproj", "{A8A64028-B5C1-4041-A734-AD8531AEA899}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModelUnitTests", "UnitTests\DomainModelUnitTests\DomainModelUnitTests.csproj", "{194F8A46-9CAE-4072-8E2D-87C1E70BE4A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainModelUnitTests", "UnitTests\DomainModelUnitTests\DomainModelUnitTests.csproj", "{194F8A46-9CAE-4072-8E2D-87C1E70BE4A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement", "EmployeeManagement\EmployeeManagement.csproj", "{CAFD9370-9536-4F70-8BC1-E4FDC3E7A701}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB2FA8B5-805E-49A4-B6D9-41CC39C29B5C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
