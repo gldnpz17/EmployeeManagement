@@ -31,7 +31,7 @@ namespace DomainModelUnitTests.Entities
 
             employee.RecordHistory(CreateDateTimeServiceMock().Object);
 
-            Assert.IsTrue(employee.EmployeeHistories.Count == 1);
+            Assert.IsTrue(employee.EditHistories.Count == 1);
         }
 
         [Test]
@@ -41,19 +41,16 @@ namespace DomainModelUnitTests.Entities
             var dateTimeService = CreateDateTimeServiceMock().Object;
 
             employee.RecordHistory(dateTimeService);
-            var history = employee.EmployeeHistories[0];
+            var history = employee.EditHistories[0];
 
             Assert.IsTrue(history.TimeStamp == dateTimeService.GetCurrentDateTime());
             Assert.IsTrue(history.Name == employee.Name);
-            Assert.IsTrue(history.Position == employee.Position.Name);
+            Assert.IsTrue(history.Position == employee.Position);
         }
 
         private Employee CreateEmployee()
         {
-            return new Employee("TestName", new Position()
-            {
-                Name = "TestPosition"
-            });
+            return new Employee("TestName", "TestPosition");
         }
 
         private Mock<IDateTimeService> CreateDateTimeServiceMock()

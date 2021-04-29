@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DomainModel.ValueObjects
 {
-    public class EmployeeHistory : ValueObject
+    public class EditHistory : ValueObject
     {
         public DateTime TimeStamp { get; set; }
         public string Name { get; set; }

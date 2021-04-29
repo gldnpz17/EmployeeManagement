@@ -14,15 +14,10 @@ namespace DomainModelUnitTests.Entities
         [Test]
         public void Employee_InputIsConstructorArgs_ShouldProperlyInitialize()
         {
-            var position = new Position()
-            {
-                Name = "TestPosition"
-            };
-
-            var employee = new Employee("TestName", position);
+            var employee = new Employee("TestName", "TestPosition");
 
             Assert.AreEqual(employee.Name, "TestName");
-            Assert.AreSame(employee.Position, position);
+            Assert.AreEqual(employee.Position, "TestPosition");
         }
     }
 }

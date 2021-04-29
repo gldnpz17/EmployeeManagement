@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainModel.Entities
+namespace EmployeeManagement.Common
 {
-    public class Position
+    public class Configuration
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        
     }
 }

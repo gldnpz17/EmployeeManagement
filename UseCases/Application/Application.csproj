@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Employee\Commands\" />
-    <Folder Include="Employee\Queries\" />
-    <Folder Include="Position\Commands\" />
-    <Folder Include="Position\Queries\" />
+    <PackageReference Include="Autofac" Version="6.2.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\Exceptions\" />
   </ItemGroup>
 
 </Project>

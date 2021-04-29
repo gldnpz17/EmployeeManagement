@@ -12,10 +12,10 @@ namespace DomainModel.Entities
     {
         public Guid EmployeedId { get; set; }
         public string Name { get; set; }
-        public Position Position { get; set; }
-        public List<EmployeeHistory> EmployeeHistories { get; set; } = new List<EmployeeHistory>();
+        public string Position { get; set; }
+        public List<EditHistory> EditHistories { get; set; } = new List<EditHistory>();
 
-        public Employee(string name, Position position)
+        public Employee(string name, string position)
         {
             Name = name;
             Position = position;
@@ -23,11 +23,11 @@ namespace DomainModel.Entities
 
         public void RecordHistory(IDateTimeService dateTimeService) 
         {
-            EmployeeHistories.Add(new EmployeeHistory()
+            EditHistories.Add(new EditHistory()
             {
                 TimeStamp = dateTimeService.GetCurrentDateTime(),
                 Name = Name,
-                Position = Position.Name
+                Position = Position
             });
         }
     }

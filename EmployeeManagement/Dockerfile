@@ -7,10 +7,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["EmployeeManagement/EmployeeManagement.csproj", "EmployeeManagement/"]
-RUN dotnet restore "EmployeeManagement/EmployeeManagement.csproj"
 COPY . .
-WORKDIR "/src/EmployeeManagement"
+WORKDIR /src/EmployeeManagement
 RUN dotnet build "EmployeeManagement.csproj" -c Release -o /app/build
 
 FROM build AS publish
