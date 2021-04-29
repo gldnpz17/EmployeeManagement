@@ -15,8 +15,9 @@ namespace DomainModel.Entities
         public string Position { get; set; }
         public List<EditHistory> EditHistories { get; set; } = new List<EditHistory>();
 
-        public Employee(string name, string position)
+        public Employee(Guid employeeId, string name, string position)
         {
+            EmployeedId = employeeId;
             Name = name;
             Position = position;
         }

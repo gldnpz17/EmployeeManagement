@@ -14,8 +14,9 @@ namespace DomainModelUnitTests.Entities
         [Test]
         public void Employee_InputIsConstructorArgs_ShouldProperlyInitialize()
         {
-            var employee = new Employee("TestName", "TestPosition");
+            var employee = new Employee(Guid.Empty, "TestName", "TestPosition");
 
+            Assert.AreEqual(employee.EmployeedId, Guid.Empty);
             Assert.AreEqual(employee.Name, "TestName");
             Assert.AreEqual(employee.Position, "TestPosition");
         }
