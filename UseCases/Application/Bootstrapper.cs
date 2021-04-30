@@ -1,6 +1,7 @@
 ﻿using Application.Common.Configuration;
 using Application.Common.Mediator;
 using Autofac;
+using EFCoreInMemory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,12 @@ namespace Application
 
             // Register global configuration.
             builder.RegisterInstance(_config).As<ApplicationConfig>().SingleInstance();
+
+            // Register database.
+            if (_config.Environment == TypeOfEnvironment.Development)
+            {
+                builder.Register(context => new EmployeeManagementDbContext("DevelopmentDatabase")).AsSelf();
+            }
 
             return builder.Build();
         }

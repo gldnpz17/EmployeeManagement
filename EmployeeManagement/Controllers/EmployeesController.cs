@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
+using Application.Common.Mediator;
+using CreateEmployee = Application.Employee.CreateEmployee;
+using ReadAllEmployees = Application.Employee.ReadAllEmployees;
+using ReadEmployeeById = Application.Employee.ReadEmployeeById;
+using UpdateEmployee = Application.Employee.UpdateEmployee;
+using DeleteEmployee = Application.Employee.DeleteEmployee;
+using AutoMapper;
 
 namespace EmployeeManagement.Controllers
 {
@@ -11,6 +18,15 @@ namespace EmployeeManagement.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
+        private readonly IApplicationMediator _application;
+        private readonly IMapper _mapper;
+
+        public EmployeesController(IApplicationMediator application, IMapper mapper)
+        {
+            _application = application;
+            _mapper = mapper;
+        }
+
         /// <summary>
         /// Creates a new employee.
         /// </summary>
@@ -19,11 +35,12 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<EmployeeQuerySimplified>> CreateEmployee([FromBody]EmployeeManipulate employee)
         {
-            return Created($"/employees/{Guid.Empty}", new EmployeeQuerySimplified() 
+            var result = await _application.SendAsync(new CreateEmployee.Command()
             {
-                Id = Guid.Empty,
-                Name = "Lorem Ipsum"
+                Employee = _mapper.Map<DomainModel.Entities.Employee>(employee)
             });
+
+            return Created($"/employees/{result.EmployeeId}", _mapper.Map<EmployeeCreateResponse>(result));
         }
 
         /// <summary>
@@ -31,21 +48,17 @@ namespace EmployeeManagement.Controllers
         /// </summary>
         /// <returns>A summarized list of all employees.</returns>
         [HttpGet]
-        public async Task<ActionResult> ReadAllEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeQuerySimplified>>> ReadAllEmployees()
         {
-            return Ok(new List<EmployeeQuerySimplified>()
+            var results = await _application.SendAsync(new ReadAllEmployees.Query());
+
+            var mappedResult = new List<EmployeeQuerySimplified>();
+            foreach (var result in results)
             {
-                new EmployeeQuerySimplified()
-                {
-                    Id = Guid.Empty,
-                    Name = "Lorem Ipsum"
-                },
-                new EmployeeQuerySimplified()
-                {
-                    Id = Guid.Empty,
-                    Name = "Dolor Sit Amet"
-                }
-            });
+                mappedResult.Add(_mapper.Map<EmployeeQuerySimplified>(result));
+            }
+
+            return Ok(mappedResult);
         }
 
         /// <summary>
@@ -54,29 +67,14 @@ namespace EmployeeManagement.Controllers
         /// <param name="id">The ID of the employee (GUID or UUID).</param>
         /// <returns>A detailed information on the employee.</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult> ReadEmployeeById([FromRoute]Guid id)
+        public async Task<ActionResult<EmployeeQueryDetailed>> ReadEmployeeById([FromRoute]Guid id)
         {
-            return Ok(new EmployeeQueryDetailed()
+            var result = await _application.SendAsync(new ReadEmployeeById.Query()
             {
-                Id = id,
-                Name = "Lorem Ipsum",
-                Position = "Consectetur",
-                EditHistories = new List<EditHistory>()
-                {
-                    new EditHistory()
-                    {
-                        Timestamp = DateTime.MinValue,
-                        Name = "Wrong Name",
-                        Position = "Wrong Position"
-                    },
-                    new EditHistory()
-                    {
-                        Timestamp = DateTime.MinValue.AddDays(1),
-                        Name = "Wrong Name Again",
-                        Position = "Wrong Position Again"
-                    }
-                }
+                EmployeeId = id
             });
+
+            return Ok(_mapper.Map<EmployeeQueryDetailed>(result));
         }
 
         /// <summary>
@@ -87,6 +85,14 @@ namespace EmployeeManagement.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateEmployee([FromRoute]Guid id, [FromBody]EmployeeManipulate employee)
         {
+            var newEmployeeData = _mapper.Map<DomainModel.Entities.Employee>(employee);
+
+            await _application.SendAsync(new UpdateEmployee.Command()
+            {
+                EmployeeId = id,
+                Employee = newEmployeeData
+            });
+
             return Ok();
         }
 
@@ -97,6 +103,11 @@ namespace EmployeeManagement.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
+            await _application.SendAsync(new DeleteEmployee.Command()
+            {
+                EmployeeId = id
+            });
+
             return Ok();
         }
     }
