@@ -9,5 +9,7 @@ namespace Application.Common.Configuration
     public class ApplicationConfig
     {
         public TypeOfEnvironment Environment { get; set; }
+        public TypeOfDatabase DatabaseType { get; set; }
+        public string ConnectionString { get; set; }
     }
 }

@@ -55,14 +55,34 @@ namespace EmployeeManagement
             });
 
             // Register application layer mediator.
+            var mediatorConfig = new ApplicationConfig();
             if (_environment.IsDevelopment())
             {
+                mediatorConfig.Environment = TypeOfEnvironment.Development;
                 var applicationMediator = new Bootstrapper(new ApplicationConfig()
                 {
                     Environment = TypeOfEnvironment.Development
                 }).Mediator;
-                services.AddSingleton(typeof(IMediator), applicationMediator);
             }
+            else
+            {
+                mediatorConfig.Environment = TypeOfEnvironment.Production;
+
+                var databaseType = Environment.GetEnvironmentVariable("DATABASE_TYPE");
+                switch (databaseType)
+                {
+                    case "InMemory":
+                        mediatorConfig.DatabaseType = TypeOfDatabase.InMemory;
+                        break;
+                    case "PostgreSQL":
+                        mediatorConfig.DatabaseType = TypeOfDatabase.PostgreSQL;
+                        mediatorConfig.ConnectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING");
+                        break;
+                    default:
+                        throw new Exception("Invalid database type. Check the \'DATABASE_TYPE\' environment variable.");
+                }
+            }
+            services.AddSingleton(typeof(IMediator), new Bootstrapper(mediatorConfig).Mediator);
 
             // Register object-to-object mapper.
             services.AddSingleton(typeof(IMapper), new Mapper(new AutomapperConfig().Configuration));
