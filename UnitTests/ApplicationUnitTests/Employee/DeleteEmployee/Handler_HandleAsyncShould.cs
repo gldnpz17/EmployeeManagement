@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ApplicationUnitTests.Employee.DeleteEmployee
@@ -28,7 +29,7 @@ namespace ApplicationUnitTests.Employee.DeleteEmployee
                 EmployeeId = Guid.Empty
             };
 
-            await handler.HandleAsync(command);
+            await handler.Handle(command, CancellationToken.None);
 
             Assert.AreEqual(0, database.Employees.Count());
         }

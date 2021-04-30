@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ApplicationUnitTests.Employee.ReadAllEmployees
@@ -31,7 +32,7 @@ namespace ApplicationUnitTests.Employee.ReadAllEmployees
             var handler = new Application.Employee.ReadAllEmployees.Handler(database);
             var query = new Application.Employee.ReadAllEmployees.Query();
 
-            var results = await handler.HandleAsync(query);
+            var results = await handler.Handle(query, CancellationToken.None);
 
             Assert.AreEqual(2, results.Count);
         }

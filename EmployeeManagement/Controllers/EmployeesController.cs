@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
-using Application.Common.Mediator;
 using CreateEmployee = Application.Employee.CreateEmployee;
 using ReadAllEmployees = Application.Employee.ReadAllEmployees;
 using ReadEmployeeById = Application.Employee.ReadEmployeeById;
 using UpdateEmployee = Application.Employee.UpdateEmployee;
 using DeleteEmployee = Application.Employee.DeleteEmployee;
 using AutoMapper;
+using MediatR;
 
 namespace EmployeeManagement.Controllers
 {
@@ -18,10 +18,10 @@ namespace EmployeeManagement.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly IApplicationMediator _application;
+        private readonly IMediator _application;
         private readonly IMapper _mapper;
 
-        public EmployeesController(IApplicationMediator application, IMapper mapper)
+        public EmployeesController(IMediator application, IMapper mapper)
         {
             _application = application;
             _mapper = mapper;
@@ -35,7 +35,7 @@ namespace EmployeeManagement.Controllers
         [HttpPost]
         public async Task<ActionResult<EmployeeQuerySimplified>> CreateEmployee([FromBody]EmployeeManipulate employee)
         {
-            var result = await _application.SendAsync(new CreateEmployee.Command()
+            var result = await _application.Send(new CreateEmployee.Command()
             {
                 Employee = _mapper.Map<DomainModel.Entities.Employee>(employee)
             });
@@ -50,7 +50,7 @@ namespace EmployeeManagement.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeQuerySimplified>>> ReadAllEmployees()
         {
-            var results = await _application.SendAsync(new ReadAllEmployees.Query());
+            var results = await _application.Send(new ReadAllEmployees.Query());
 
             var mappedResult = new List<EmployeeQuerySimplified>();
             foreach (var result in results)
@@ -69,7 +69,7 @@ namespace EmployeeManagement.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeQueryDetailed>> ReadEmployeeById([FromRoute]Guid id)
         {
-            var result = await _application.SendAsync(new ReadEmployeeById.Query()
+            var result = await _application.Send(new ReadEmployeeById.Query()
             {
                 EmployeeId = id
             });
@@ -87,7 +87,7 @@ namespace EmployeeManagement.Controllers
         {
             var newEmployeeData = _mapper.Map<DomainModel.Entities.Employee>(employee);
 
-            await _application.SendAsync(new UpdateEmployee.Command()
+            await _application.Send(new UpdateEmployee.Command()
             {
                 EmployeeId = id,
                 Employee = newEmployeeData
@@ -103,7 +103,7 @@ namespace EmployeeManagement.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            await _application.SendAsync(new DeleteEmployee.Command()
+            await _application.Send(new DeleteEmployee.Command()
             {
                 EmployeeId = id
             });

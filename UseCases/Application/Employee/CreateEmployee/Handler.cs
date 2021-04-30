@@ -1,9 +1,11 @@
-﻿using Application.Common.Mediator;
+﻿using DomainModel.Services;
 using EFCoreInMemory;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Employee.CreateEmployee
@@ -11,13 +13,15 @@ namespace Application.Employee.CreateEmployee
     public class Handler : IRequestHandler<Command, DomainModel.Entities.Employee>
     {
         private readonly EmployeeManagementDbContext _dbContext;
+        private readonly IDateTimeService _dateTimeService;
 
-        public Handler(EmployeeManagementDbContext dbContext)
+        public Handler(EmployeeManagementDbContext dbContext, IDateTimeService dateTimeService)
         {
             _dbContext = dbContext;
+            _dateTimeService = dateTimeService;
         }
 
-        public async Task<DomainModel.Entities.Employee> HandleAsync(Command request)
+        public async Task<DomainModel.Entities.Employee> Handle(Command request, CancellationToken cancellationToken)
         {
             // Validate employee data.
             if (request.Employee.Name == null || request.Employee.Name == "")
@@ -35,6 +39,8 @@ namespace Application.Employee.CreateEmployee
                 Name = request.Employee.Name,
                 Position = request.Employee.Position
             };
+
+            newEmployeee.RecordHistory(_dateTimeService);
 
             await _dbContext.Employees.AddAsync(newEmployeee);
 

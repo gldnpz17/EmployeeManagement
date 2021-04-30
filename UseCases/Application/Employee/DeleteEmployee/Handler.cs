@@ -1,10 +1,11 @@
-﻿using Application.Common.Mediator;
-using EFCoreInMemory;
+﻿using EFCoreInMemory;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Employee.DeleteEmployee
@@ -18,7 +19,7 @@ namespace Application.Employee.DeleteEmployee
             _dbContext = dbContext;
         }
 
-        public async Task<Unit> HandleAsync(Command request)
+        public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
             var employee = await _dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == request.EmployeeId);
 
@@ -31,7 +32,7 @@ namespace Application.Employee.DeleteEmployee
 
             await _dbContext.SaveChangesAsync();
 
-            return Unit.Void;
+            return Unit.Value;
         }
     }
 }

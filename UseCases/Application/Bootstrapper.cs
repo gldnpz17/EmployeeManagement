@@ -1,9 +1,10 @@
 ﻿using Application.Common.Configuration;
-using Application.Common.Mediator;
 using Autofac;
 using DomainModel.Services;
 using DomainServiceImplementation;
 using EFCoreInMemory;
+using MediatR;
+using MediatR.Extensions.Autofac.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +17,7 @@ namespace Application
 {
     public class Bootstrapper
     {
-        public IApplicationMediator Mediator { get; }
+        public IMediator Mediator { get; }
 
         private readonly ILifetimeScope _scope;
 
@@ -29,9 +30,7 @@ namespace Application
             var container = RegisterDependencies();
             _scope = container.BeginLifetimeScope();
 
-            Debug.WriteLine(_scope.IsRegistered<IRequestHandler<IRequest<DomainModel.Entities.Employee>, DomainModel.Entities.Employee>>());
-
-            Mediator = _scope.Resolve<IApplicationMediator>(new TypedParameter(typeof(ILifetimeScope), _scope));
+            Mediator = _scope.Resolve<IMediator>();
         }
 
         private IContainer RegisterDependencies()
@@ -39,13 +38,7 @@ namespace Application
             var builder = new ContainerBuilder();
 
             // Register mediator.
-            builder.RegisterType<ApplicationMediator>().As<IApplicationMediator>().SingleInstance();
-
-            // Register request handlers.
-            var assemblies = new Assembly[] { Assembly.GetExecutingAssembly() };
-            builder.RegisterAssemblyTypes(assemblies)
-                .AsClosedTypesOf(typeof(IRequestHandler<,>).MakeGenericType(typeof(IRequest<>)))
-                .AsImplementedInterfaces();
+            builder.RegisterMediatR(Assembly.GetExecutingAssembly());
 
             // Register global configuration.
             builder.RegisterInstance(_config).As<ApplicationConfig>().SingleInstance();

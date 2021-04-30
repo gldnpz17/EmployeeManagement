@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ApplicationUnitTests.Employee.ReadEmployeeById
@@ -34,7 +35,7 @@ namespace ApplicationUnitTests.Employee.ReadEmployeeById
                 EmployeeId = Guid.Parse("00000000-0000-0000-0000-000000000001")
             };
 
-            var result = await handler.HandleAsync(query);
+            var result = await handler.Handle(query, CancellationToken.None);
 
             Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000001"), result.EmployeeId);
         }

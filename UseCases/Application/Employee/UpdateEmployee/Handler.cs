@@ -1,11 +1,12 @@
-﻿using Application.Common.Mediator;
-using DomainModel.Services;
+﻿using DomainModel.Services;
 using EFCoreInMemory;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Employee.UpdateEmployee
@@ -21,7 +22,7 @@ namespace Application.Employee.UpdateEmployee
             _dateTimeService = dateTimeService;
         }
 
-        public async Task<Unit> HandleAsync(Command request)
+        public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
             var employee = await _dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == request.EmployeeId);
 
@@ -35,14 +36,14 @@ namespace Application.Employee.UpdateEmployee
                 throw new ApplicationException("Employee position can't be empty.");
             }
 
-            employee.RecordHistory(_dateTimeService);
-
             employee.Name = request.Employee.Name;
             employee.Position = request.Employee.Position;
 
+            employee.RecordHistory(_dateTimeService);
+
             await _dbContext.SaveChangesAsync();
 
-            return Unit.Void;
+            return Unit.Value;
         }
     }
 }

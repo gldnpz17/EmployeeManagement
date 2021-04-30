@@ -1,8 +1,8 @@
 using Application;
 using Application.Common.Configuration;
-using Application.Common.Mediator;
 using AutoMapper;
 using EmployeeManagement.Common.Mapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -61,7 +61,7 @@ namespace EmployeeManagement
                 {
                     Environment = TypeOfEnvironment.Development
                 }).Mediator;
-                services.AddSingleton(typeof(IApplicationMediator), applicationMediator);
+                services.AddSingleton(typeof(IMediator), applicationMediator);
             }
 
             // Register object-to-object mapper.
