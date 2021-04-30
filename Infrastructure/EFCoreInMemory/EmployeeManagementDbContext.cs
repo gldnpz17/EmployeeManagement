@@ -12,6 +12,8 @@ namespace EFCoreInMemory
     {
         private string _databaseName;
 
+        public EmployeeManagementDbContext() { }
+
         public EmployeeManagementDbContext(string databaseName)
         {
             _databaseName = databaseName;

@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreInMemory", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationUnitTests", "UnitTests\ApplicationUnitTests\ApplicationUnitTests.csproj", "{BBAB0D3F-63B7-4C2A-9BB2-DE9FD49453C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainServiceImplementation", "Infrastructure\DomainServiceImplementation\DomainServiceImplementation.csproj", "{19ED28C7-8108-4B15-BB12-F20A208698AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainServiceImplementation", "Infrastructure\DomainServiceImplementation\DomainServiceImplementation.csproj", "{19ED28C7-8108-4B15-BB12-F20A208698AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCorePostgres", "Infrastructure\EFCorePostgres\EFCorePostgres.csproj", "{D8407696-BDA8-4B1F-932A-B92FA6A8709D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{19ED28C7-8108-4B15-BB12-F20A208698AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19ED28C7-8108-4B15-BB12-F20A208698AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19ED28C7-8108-4B15-BB12-F20A208698AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8407696-BDA8-4B1F-932A-B92FA6A8709D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8407696-BDA8-4B1F-932A-B92FA6A8709D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8407696-BDA8-4B1F-932A-B92FA6A8709D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8407696-BDA8-4B1F-932A-B92FA6A8709D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

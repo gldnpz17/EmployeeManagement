@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\Entities\DomainModel\DomainModel.csproj" />
     <ProjectReference Include="..\..\Infrastructure\DomainServiceImplementation\DomainServiceImplementation.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EFCoreInMemory\EFCoreInMemory.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EFCorePostgres\EFCorePostgres.csproj" />
   </ItemGroup>
 
 </Project>
