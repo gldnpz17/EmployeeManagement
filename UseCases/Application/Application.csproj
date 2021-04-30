@@ -7,10 +7,14 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Autofac.DependencyInjection" Version="7.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
+    <ProjectReference Include="..\..\Entities\DomainModel\DomainModel.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\DomainServiceImplementation\DomainServiceImplementation.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\EFCoreInMemory\EFCoreInMemory.csproj" />
   </ItemGroup>
 
 </Project>

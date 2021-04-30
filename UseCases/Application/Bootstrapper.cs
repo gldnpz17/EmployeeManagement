@@ -1,8 +1,13 @@
 ﻿using Application.Common.Configuration;
-using Application.Common.Mediator;
 using Autofac;
+using DomainModel.Services;
+using DomainServiceImplementation;
+using EFCoreInMemory;
+using MediatR;
+using MediatR.Extensions.Autofac.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,7 +17,7 @@ namespace Application
 {
     public class Bootstrapper
     {
-        public IApplicationMediator Mediator { get; }
+        public IMediator Mediator { get; }
 
         private readonly ILifetimeScope _scope;
 
@@ -25,7 +30,7 @@ namespace Application
             var container = RegisterDependencies();
             _scope = container.BeginLifetimeScope();
 
-            Mediator = _scope.Resolve<IApplicationMediator>(new TypedParameter(typeof(ILifetimeScope), _scope));
+            Mediator = _scope.Resolve<IMediator>();
         }
 
         private IContainer RegisterDependencies()
@@ -33,16 +38,19 @@ namespace Application
             var builder = new ContainerBuilder();
 
             // Register mediator.
-            builder.RegisterType<ApplicationMediator>().As<IApplicationMediator>().SingleInstance();
-
-            // Register request handlers.
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.IsAssignableFrom(typeof(IRequestHandler<,>)))
-                .AsSelf()
-                .InstancePerDependency();
+            builder.RegisterMediatR(Assembly.GetExecutingAssembly());
 
             // Register global configuration.
             builder.RegisterInstance(_config).As<ApplicationConfig>().SingleInstance();
+
+            // Register database.
+            if (_config.Environment == TypeOfEnvironment.Development)
+            {
+                builder.Register(context => new EmployeeManagementDbContext("DevelopmentDatabase")).AsSelf();
+            }
+
+            // Register DateTime service.
+            builder.RegisterInstance(new UtcDateTimeService()).As<IDateTimeService>().SingleInstance();
 
             return builder.Build();
         }

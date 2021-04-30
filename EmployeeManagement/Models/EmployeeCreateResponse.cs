@@ -8,6 +8,6 @@ namespace EmployeeManagement.Models
 {
     public class EmployeeCreateResponse
     {
-        public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
     }
 }

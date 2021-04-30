@@ -1,3 +1,8 @@
+using Application;
+using Application.Common.Configuration;
+using AutoMapper;
+using EmployeeManagement.Common.Mapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +18,13 @@ namespace EmployeeManagement
 {
     public class Startup
     {
+        private readonly IWebHostEnvironment _environment;
+
+        public Startup(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -41,6 +53,19 @@ namespace EmployeeManagement
             {
                 config.RootPath = "client-app/build";
             });
+
+            // Register application layer mediator.
+            if (_environment.IsDevelopment())
+            {
+                var applicationMediator = new Bootstrapper(new ApplicationConfig()
+                {
+                    Environment = TypeOfEnvironment.Development
+                }).Mediator;
+                services.AddSingleton(typeof(IMediator), applicationMediator);
+            }
+
+            // Register object-to-object mapper.
+            services.AddSingleton(typeof(IMapper), new Mapper(new AutomapperConfig().Configuration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

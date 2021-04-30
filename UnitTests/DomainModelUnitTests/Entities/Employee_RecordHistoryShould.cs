@@ -50,7 +50,7 @@ namespace DomainModelUnitTests.Entities
 
         private Employee CreateEmployee()
         {
-            return new Employee("TestName", "TestPosition");
+            return new Employee(Guid.Empty, "TestName", "TestPosition");
         }
 
         private Mock<IDateTimeService> CreateDateTimeServiceMock()

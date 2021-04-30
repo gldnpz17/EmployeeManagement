@@ -8,7 +8,7 @@ namespace EmployeeManagement.Models
 {
     public class EmployeeQuerySimplified
     {
-        public Guid Id { get; set; }
+        public Guid EmployeeId { get; set; }
         public string Name { get; set; }
     }
 }

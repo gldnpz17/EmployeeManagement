@@ -9,9 +9,9 @@ namespace DomainModel.ValueObjects
 {
     public class EditHistory : ValueObject
     {
-        public DateTime TimeStamp { get; set; }
-        public string Name { get; set; }
-        public string Position { get; set; }
+        public virtual DateTime TimeStamp { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Position { get; set; }
 
         protected override IEnumerable<object> GetAtomicValues()
         {
