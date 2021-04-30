@@ -16,7 +16,7 @@ namespace DomainModelUnitTests.Entities
         {
             var employee = new Employee(Guid.Empty, "TestName", "TestPosition");
 
-            Assert.AreEqual(employee.EmployeedId, Guid.Empty);
+            Assert.AreEqual(employee.EmployeeId, Guid.Empty);
             Assert.AreEqual(employee.Name, "TestName");
             Assert.AreEqual(employee.Position, "TestPosition");
         }

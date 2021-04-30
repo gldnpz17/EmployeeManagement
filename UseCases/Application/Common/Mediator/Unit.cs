@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Employee.ReadEmployeeById
+namespace Application.Common.Mediator
 {
-    public class EmployeeHistory
+    public struct Unit
     {
-
+        public static Unit Void { get; } = new Unit();
     }
 }

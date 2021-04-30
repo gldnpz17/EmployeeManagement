@@ -10,14 +10,16 @@ namespace DomainModel.Entities
 {
     public class Employee
     {
-        public Guid EmployeedId { get; set; }
+        public Guid EmployeeId { get; set; }
         public string Name { get; set; }
         public string Position { get; set; }
         public List<EditHistory> EditHistories { get; set; } = new List<EditHistory>();
 
+        public Employee() { }
+
         public Employee(Guid employeeId, string name, string position)
         {
-            EmployeedId = employeeId;
+            EmployeeId = employeeId;
             Name = name;
             Position = position;
         }

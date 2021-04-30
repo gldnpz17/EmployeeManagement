@@ -10,18 +10,25 @@ namespace EFCoreInMemory
 {
     public class EmployeeManagementDbContext : DbContext
     {
+        private string _databaseName;
+
+        public EmployeeManagementDbContext(string databaseName)
+        {
+            _databaseName = databaseName;
+        }
+
         public DbSet<Employee> Employees { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("EmployeeManagementDB");
+            optionsBuilder.UseInMemoryDatabase(_databaseName);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>(b =>
             {
-                b.HasKey(e => e.EmployeedId);
+                b.HasKey(e => e.EmployeeId);
 
                 b.OwnsMany(e => e.EditHistories);
             });
