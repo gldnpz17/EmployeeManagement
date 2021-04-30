@@ -1,6 +1,8 @@
 ﻿using Application.Common.Configuration;
 using Application.Common.Mediator;
 using Autofac;
+using DomainModel.Services;
+using DomainServiceImplementation;
 using EFCoreInMemory;
 using System;
 using System.Collections.Generic;
@@ -50,6 +52,9 @@ namespace Application
             {
                 builder.Register(context => new EmployeeManagementDbContext("DevelopmentDatabase")).AsSelf();
             }
+
+            // Register DateTime service.
+            builder.RegisterInstance(new DateTimeService()).As<IDateTimeService>().SingleInstance();
 
             return builder.Build();
         }

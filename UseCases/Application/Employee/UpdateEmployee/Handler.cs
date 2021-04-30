@@ -1,4 +1,5 @@
 ﻿using Application.Common.Mediator;
+using DomainModel.Services;
 using EFCoreInMemory;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,10 +13,12 @@ namespace Application.Employee.UpdateEmployee
     public class Handler : IRequestHandler<Command, Unit>
     {
         private readonly EmployeeManagementDbContext _dbContext;
+        private readonly IDateTimeService _dateTimeService;
 
-        public Handler(EmployeeManagementDbContext dbContext)
+        public Handler(EmployeeManagementDbContext dbContext, IDateTimeService dateTimeService)
         {
             _dbContext = dbContext;
+            _dateTimeService = dateTimeService;
         }
 
         public async Task<Unit> HandleAsync(Command request)
@@ -31,6 +34,8 @@ namespace Application.Employee.UpdateEmployee
             {
                 throw new ApplicationException("Employee position can't be empty.");
             }
+
+            employee.RecordHistory(_dateTimeService);
 
             employee.Name = request.Employee.Name;
             employee.Position = request.Employee.Position;
