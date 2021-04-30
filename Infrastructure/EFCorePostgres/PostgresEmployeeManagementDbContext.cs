@@ -8,6 +8,11 @@ namespace EFCorePostgres
     {
         private readonly string _connectionString;
 
+        public PostgresEmployeeManagementDbContext()
+        {
+
+        }
+
         public PostgresEmployeeManagementDbContext(string connectionString)
         {
             _connectionString = connectionString;
@@ -16,7 +21,14 @@ namespace EFCorePostgres
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
-            optionsBuilder.UseNpgsql(_connectionString);
+            if (_connectionString == "" || _connectionString == null)
+            {
+                optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("PGDB_CONNECTION_STRING"));
+            }
+            else
+            {
+                optionsBuilder.UseNpgsql(_connectionString);
+            }
         }
     }
 }
