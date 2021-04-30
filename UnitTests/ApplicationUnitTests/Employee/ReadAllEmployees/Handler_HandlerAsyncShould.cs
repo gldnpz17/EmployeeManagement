@@ -17,13 +17,13 @@ namespace ApplicationUnitTests.Employee.ReadAllEmployees
             var database = new EmployeeManagementDbContext(Guid.NewGuid().ToString());
             database.Add(new DomainModel.Entities.Employee()
             {
-                EmployeeId = Guid.Empty,
+                EmployeeId = Guid.NewGuid(),
                 Name = "TestName1",
                 Position = "TestPosition1",
             });
             database.Add(new DomainModel.Entities.Employee()
             {
-                EmployeeId = Guid.Empty,
+                EmployeeId = Guid.NewGuid(),
                 Name = "TestName2",
                 Position = "TestPosition2",
             });

@@ -1,5 +1,6 @@
 ﻿using Application.Common.Mediator;
 using EFCoreInMemory;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,9 @@ namespace Application.Employee.ReadAllEmployees
 
         public async Task<IList<DomainModel.Entities.Employee>> HandleAsync(Query request)
         {
-            throw new NotImplementedException();
+            var employees = await _dbContext.Employees.ToListAsync();
+
+            return employees;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace EFCoreInMemory
             modelBuilder.Entity<Employee>(b =>
             {
                 b.HasKey(e => e.EmployeeId);
+                b.Property(e => e.EmployeeId).ValueGeneratedNever();
 
                 b.OwnsMany(e => e.EditHistories);
             });

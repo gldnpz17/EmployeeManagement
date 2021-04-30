@@ -1,5 +1,6 @@
 ﻿using Application.Common.Mediator;
 using EFCoreInMemory;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,14 @@ namespace Application.Employee.ReadEmployeeById
 
         public async Task<DomainModel.Entities.Employee> HandleAsync(Query request)
         {
-            throw new NotImplementedException();
+            var employee = await _dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == request.EmployeeId);
+
+            if (employee == null)
+            {
+                throw new ApplicationException("Can't find an employee with the given ID.");
+            }
+
+            return employee;
         }
     }
 }

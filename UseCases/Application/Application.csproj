@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Entities\DomainModel\DomainModel.csproj" />
     <ProjectReference Include="..\..\Infrastructure\EFCoreInMemory\EFCoreInMemory.csproj" />
   </ItemGroup>
