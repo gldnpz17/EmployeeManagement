@@ -6,6 +6,7 @@ using DomainServiceImplementation;
 using EFCoreInMemory;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -28,6 +29,8 @@ namespace Application
             var container = RegisterDependencies();
             _scope = container.BeginLifetimeScope();
 
+            Debug.WriteLine(_scope.IsRegistered<IRequestHandler<IRequest<DomainModel.Entities.Employee>, DomainModel.Entities.Employee>>());
+
             Mediator = _scope.Resolve<IApplicationMediator>(new TypedParameter(typeof(ILifetimeScope), _scope));
         }
 
@@ -39,10 +42,10 @@ namespace Application
             builder.RegisterType<ApplicationMediator>().As<IApplicationMediator>().SingleInstance();
 
             // Register request handlers.
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.IsAssignableFrom(typeof(IRequestHandler<,>)))
-                .AsSelf()
-                .InstancePerDependency();
+            var assemblies = new Assembly[] { Assembly.GetExecutingAssembly() };
+            builder.RegisterAssemblyTypes(assemblies)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>).MakeGenericType(typeof(IRequest<>)))
+                .AsImplementedInterfaces();
 
             // Register global configuration.
             builder.RegisterInstance(_config).As<ApplicationConfig>().SingleInstance();
