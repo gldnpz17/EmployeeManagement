@@ -54,7 +54,7 @@ namespace Application
             }
 
             // Register DateTime service.
-            builder.RegisterInstance(new DateTimeService()).As<IDateTimeService>().SingleInstance();
+            builder.RegisterInstance(new UtcDateTimeService()).As<IDateTimeService>().SingleInstance();
 
             return builder.Build();
         }
