@@ -10,5 +10,6 @@ namespace EmployeeManagement.Models
     {
         public Guid EmployeeId { get; set; }
         public string Name { get; set; }
+        public string Position { get; set; }
     }
 }
