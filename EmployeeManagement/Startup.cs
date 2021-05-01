@@ -96,6 +96,13 @@ namespace EmployeeManagement
 
             app.UseRouting();
 
+            app.UseCors(config =>
+            {
+                config.AllowAnyMethod();
+                config.AllowAnyHeader();
+                config.AllowAnyOrigin();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseOpenApi();

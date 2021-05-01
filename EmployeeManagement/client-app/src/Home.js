@@ -24,9 +24,6 @@ class Home extends Component{
     componentDidMount(){
         this.getKaryawan()
     }
-    componentDidUpdate(){
-        this.getKaryawan()
-    }
     delete(employeeId){
         if(window.confirm('Are you sure?')){
             fetch(`https://employeemanagement.gldnpz.com/api/employees/${employeeId}`,{
