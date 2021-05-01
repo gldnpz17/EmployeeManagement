@@ -117,6 +117,11 @@ namespace EmployeeManagement
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "client-app";
+
+                if (_environment.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
         }
     }
