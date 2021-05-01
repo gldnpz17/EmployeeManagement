@@ -8,7 +8,7 @@ class Home extends Component{
         this.state={
             employee:[],
             editEmployeeShow:false,
-            id:0,
+            employeeId:0,
             name:'Bob',
             position:'manager'
         };
@@ -27,9 +27,9 @@ class Home extends Component{
     componentDidUpdate(){
         this.getKaryawan()
     }
-    delete(id){
+    delete(employeeId){
         if(window.confirm('Are you sure?')){
-            fetch(`https://employeemanagement.gldnpz.com/api/employees/${id}`,{
+            fetch(`https://employeemanagement.gldnpz.com/api/employees/${employeeId}`,{
                 method:'DELETE',
                 header:{'Accept':'application/json',
                 'Content-Type':'application/json'}
@@ -38,7 +38,7 @@ class Home extends Component{
     }
 
     editHandleSubmit(event){
-        fetch(`https://employeemanagement.gldnpz.com/api/employees/${event.target.id.value}`,{
+        fetch(`https://employeemanagement.gldnpz.com/api/employees/${event.target.employeeId.value}`,{
             method:'PUT',
             headers:{
                 'Accept':'application/json',
@@ -67,7 +67,6 @@ class Home extends Component{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                id:null,
                 name:event.target.name.value,
                 position:event.target.position.value
             })
@@ -122,21 +121,21 @@ class Home extends Component{
                     </thead>  
                     <tbody>
                         {this.state.employee.map(n=>
-                            <tr key={n.id}>
-                                <td>{n.id}</td>
+                            <tr key={n.employeeId}>
+                                <td>{n.employeeId}</td>
                                 <td>{n.name}</td>
                                 <td>{n.position}</td>
                                 <td>
                                     <ButtonToolbar>
                                         <Button className="mr-2" variant="info"
                                             onClick={()=>this.setState({editEmployeeShow:true,
-                                            id:n.id,name:n.name,position:n.position})}
+                                            employeeId:n.employeeId,name:n.name,position:n.position})}
                                         >
                                                 Edit
                                         </Button>
 
                                         <Button className="mr-2" variant="danger"
-                                            onClick={()=>this.delete(n.id)}
+                                            onClick={()=>this.delete(n.employeeId)}
                                         >
                                             Delete
                                         </Button>
@@ -161,7 +160,7 @@ class Home extends Component{
                                                     <Form.Group controlId="id">
                                                         <Form.Label>ID</Form.Label>
                                                         <Form.Control type="text" name="id" required disabled
-                                                        defaultValue={this.props.id}
+                                                        defaultValue={this.props.employeeId}
                                                         placeholder="ID"/>
                                                     </Form.Group>
                                                     

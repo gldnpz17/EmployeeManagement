@@ -59,10 +59,6 @@ namespace EmployeeManagement
             if (_environment.IsDevelopment())
             {
                 mediatorConfig.Environment = TypeOfEnvironment.Development;
-                var applicationMediator = new Bootstrapper(new ApplicationConfig()
-                {
-                    Environment = TypeOfEnvironment.Development
-                }).Mediator;
             }
             else
             {
