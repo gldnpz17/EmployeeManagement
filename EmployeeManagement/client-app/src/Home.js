@@ -24,6 +24,9 @@ class Home extends Component{
     componentDidMount(){
         this.getKaryawan()
     }
+    componentDidUpdate(){
+        this.getKaryawan()
+    }
     delete(employeeId){
         if(window.confirm('Are you sure?')){
             fetch(`https://employeemanagement.gldnpz.com/api/employees/${employeeId}`,{
@@ -35,6 +38,7 @@ class Home extends Component{
     }
 
     editHandleSubmit(event){
+        event.preventDefault();
         fetch(`https://employeemanagement.gldnpz.com/api/employees/${event.target.employeeId.value}`,{
             method:'PUT',
             headers:{
@@ -45,17 +49,12 @@ class Home extends Component{
                 name:event.target.name.value,
                 position:event.target.position.value
             })
-        })
-        .then(res=>res.json())
-        .then((result)=>{
-            alert(result);
-        },
-        (error)=>{
-            alert('Failed');
+        }).then(res => {
+            window.location.reload();
         })
     }
 
-    addhandleSubmit(event){
+    addHandleSubmit(event){
         event.preventDefault();
         fetch('https://employeemanagement.gldnpz.com/api/employees',{
             method:'POST',
@@ -145,7 +144,7 @@ class Home extends Component{
                                     centered
                                     show={this.state.editEmployeeShow}
                                 >
-                                    <Modal.Header clooseButton>
+                                    <Modal.Header closeButton>
                                         <Modal.Title id="contained-modal-title-vcenter">
                                             Edit Employee
                                         </Modal.Title>
@@ -154,24 +153,24 @@ class Home extends Component{
                                         <Row>
                                             <Col sm={6}>
                                                 <Form onSubmit={this.editHandleSubmit}>
-                                                    <Form.Group controlId="id">
+                                                    <Form.Group controlId="employeeId">
                                                         <Form.Label>ID</Form.Label>
-                                                        <Form.Control type="text" name="id" required disabled
-                                                        defaultValue={this.props.employeeId}
+                                                        <Form.Control type="text" name="employeeId" required disabled
+                                                        defaultValue={this.state.employeeId}
                                                         placeholder="ID"/>
                                                     </Form.Group>
                                                     
                                                     <Form.Group controlId="name">
                                                         <Form.Label>Name</Form.Label>
                                                         <Form.Control type="text" name="name" required 
-                                                        defaultValue={this.props.name}
+                                                        defaultValue={this.state.name}
                                                         placeholder="Name"/>
                                                     </Form.Group>
                 
                                                     <Form.Group controlId="position">
                                                         <Form.Label>Position</Form.Label>
                                                         <Form.Control type="text" name="position" required
-                                                        defaultValue={this.props.position} 
+                                                        defaultValue={this.state.position} 
                                                         placeholder="Position"/>
                                                     </Form.Group>
                 
