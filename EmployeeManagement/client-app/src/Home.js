@@ -53,8 +53,8 @@ const Home = () => {
       </div>
       <p className="mb-3"><b>Tugas Kelompok Arsitektur Perangkat Lunak</b></p>
       <b>Anggota Kelompok:</b>
-      <p>Firdaus Bisma Suryakusuma 19/444051/TK/49247</p>
-      <p>Lorem Ipsum 00/000000/TK/00000</p>
+      <p>Firdaus Bisma Suryakusuma (NIM: 19/444051/TK/49247)</p>
+      <p>Syafiq Muhammad Alaudin (NIM: 19/444073/TK/49269)</p>
       
       <Button className="mt-3 d-flex flex-row" onClick={() => setAddEmployeeModalShow(true)}>
         <svg className="mr-2" style={{width: '1.5em', height: '1.5em'}} viewBox="0 0 24 24">
