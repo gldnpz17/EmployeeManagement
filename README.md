@@ -136,3 +136,10 @@ Status: `200 OK`
 * `DATABASE_TYPE`: `InMemory` to use the in-memory database or `PostgreSQL` to use a postgres database. Could only be used in production mode.
 * `DATABASE_CONNECTION_STRING`: The database connection string used to connect to a production database.
 * `PGDB_CONNECTION_STRING`: The connection string used to generate database migrations.
+
+## Screenshots
+![image](https://user-images.githubusercontent.com/55144706/116805283-7b0abf00-ab4f-11eb-80e1-f1804a8c9dd1.png)
+![image](https://user-images.githubusercontent.com/55144706/116805294-8e1d8f00-ab4f-11eb-8eba-387ec766cead.png)
+![image](https://user-images.githubusercontent.com/55144706/116805298-9c6bab00-ab4f-11eb-8a57-d79384aa2a76.png)
+![image](https://user-images.githubusercontent.com/55144706/116805309-b2796b80-ab4f-11eb-934a-8cbd32a98c97.png)
+![image](https://user-images.githubusercontent.com/55144706/116805317-c91fc280-ab4f-11eb-8df2-bd84284a67a1.png)
