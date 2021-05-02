@@ -40,7 +40,7 @@ base directory
 ```
 
 ## REST API Documentation
-A swagger documentation could be accessed by accessing `/swagger` in development mode.
+A more detailed swagger documentation could be accessed by accessing `/swagger` in development mode.
 ### Adding a new employee
 #### Request
 Endpoint: `POST /api/employees`
